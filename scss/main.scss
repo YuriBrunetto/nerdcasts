@@ -1,7 +1,109 @@
+/* vars */
+$white-secondary: rgba(255,255,255,.9);
+$white-tertiary: rgba(255,255,255,.5);
+/* vars */
+
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
+  line-height: 100%;
 }
 
 body {
+  min-height: 100vh;
   font-family: 'Avenir', sans-serif;
+  background-color: #f9f9f9;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+
+  .ep {
+    background-color: #fff;
+    margin: 40px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 5px 5px 15px rgba(0,0,0,.1);
+
+    header {
+      padding: 32px 32px 64px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0,0,0,.7);
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 2;
+
+        h1 {
+          font-size: 30px;
+        }
+        h2 {
+          font-size: 18px;
+          font-weight: normal;
+          color: $white-secondary;
+          font-weight: normal;
+          margin-top: 16px;
+          line-height: 150%;
+        }
+        .duration {
+          margin-top: 8px;
+          font-size: 12px;
+          font-weight: bold;
+        }
+        .guests {
+          font-size: 10px;
+          color: #fff;
+          margin-top: 24px;
+          padding: 4px 8px;
+          background-color: #27ae60;
+          border-radius: 4px;
+          display: inline-block;
+          font-weight: bold;
+          margin-right: 4px;
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    .main {
+      padding: 16px 32px;
+
+      .qualidades {
+        display: flex;
+        justify-content: space-between;
+
+        a {
+          font-weight: bold;
+          color: #2980b9;
+          text-decoration: none;
+          padding: 16px 24px;
+          background-color: transparent;
+          border-radius: 8px;
+          transition: background-color .3s;
+          &:hover {
+            background-color: rgba(0,0,0,.02);
+          }
+        }
+      }
+    }
+  }
 }
