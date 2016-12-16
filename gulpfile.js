@@ -5,6 +5,7 @@ const uglify = require('gulp-uglify')
 const browserSync = require('browser-sync').create()
 const sass = require('gulp-sass')
 const autoprefixer = require('gulp-autoprefixer')
+const pump = require('pump')
 
 gulp.task('serve', ['sass'], () => {
   browserSync.init({ server: './' })
@@ -24,11 +25,13 @@ gulp.task('sass', () => {
 })
 
 // js
-gulp.task('js', () => {
-  return gulp.src('./js/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist'))
-    .pipe(browserSync.stream())
+gulp.task('js', (cb) => {
+  pump([
+    gulp.src('./js/*.js'),
+    uglify(),
+    gulp.dest('./dist'),
+    browserSync.stream()
+  ], cb)
 })
 
 gulp.task('js-watch', ['js'], browserSync.reload)

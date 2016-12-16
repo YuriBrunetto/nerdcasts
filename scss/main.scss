@@ -95,12 +95,15 @@ main {
           font-weight: bold;
           color: #2980b9;
           text-decoration: none;
-          padding: 16px 24px;
+          padding: 16px;
           background-color: transparent;
           border-radius: 8px;
-          transition: background-color .3s;
+          transition: border-color .3s;
+          border: 1px solid transparentize(#2980b9, .9);
+          font-size: 12px;
+          text-transform: uppercase;
           &:hover {
-            background-color: rgba(0,0,0,.02);
+            border-color: transparentize(#2980b9, .7);
           }
         }
       }
