@@ -29,8 +29,6 @@ request.onload = function() {
         product_name: nc.product_name
       }
 
-      console.log(nc);
-
       var product;
 
       if (episode.product_name == 'NerdTech')
