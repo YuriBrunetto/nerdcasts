@@ -1,5 +1,7 @@
 'use strict'
 
+moment.locale('pt-BR')
+
 var request = new XMLHttpRequest()
 var url = 'https://api.jovemnerd.com.br/wp-json/jovemnerd/v1/nerdcasts'
 
@@ -30,7 +32,6 @@ request.onload = function() {
       }
 
       var product;
-
       if (episode.product_name == 'NerdTech')
         product = 'NerdTech '
       else if (episode.product_name == 'Empreendedor')
@@ -41,7 +42,7 @@ request.onload = function() {
       str += '<div class="wrap">'
       str += '<h1>' + (product ? product : '') + '#' + episode.num + ' - ' + episode.title + '</h1>'
       str += '<h2>' + episode.description + '</h2>'
-      str += '<p class="duration">' + episode.duration + ' minutos</p>'
+      str += '<p class="duration">' + moment(episode.published).format('LL') + ' - ' + episode.duration + ' minutos</p>'
       for (var i = 0; i < episode.guests.length; i++) {
         str += '<span class="guests">' + episode.guests[i] + '</span>'
       }
