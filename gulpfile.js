@@ -6,6 +6,7 @@ const browserSync = require('browser-sync').create()
 const sass = require('gulp-sass')
 const autoprefixer = require('gulp-autoprefixer')
 const pump = require('pump')
+const babel = require('gulp-babel')
 
 gulp.task('serve', ['sass'], () => {
   browserSync.init({ server: './' })
@@ -28,6 +29,7 @@ gulp.task('sass', () => {
 gulp.task('js', (cb) => {
   pump([
     gulp.src('./js/*.js'),
+    babel({ presets: ['es2015'] }),
     uglify(),
     gulp.dest('./dist'),
     browserSync.stream()
