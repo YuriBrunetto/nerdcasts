@@ -1,7 +1,5 @@
 'use strict'
 
-moment.locale('pt-BR')
-
 var request = new XMLHttpRequest()
 var url = 'https://api.jovemnerd.com.br/wp-json/jovemnerd/v1/nerdcasts'
 
