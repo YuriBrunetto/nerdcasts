@@ -1,70 +1,56 @@
 'use strict'
 
-var request = new XMLHttpRequest()
-var url = 'https://api.jovemnerd.com.br/wp-json/jovemnerd/v1/nerdcasts'
+const url = 'https://api.jovemnerd.com.br/wp-json/jovemnerd/v1/nerdcasts'
+const content = document.getElementById('content')
 
-request.open('GET', url, true)
+fetch(url).then(res => {
+  if (res.ok) {
+    return res.json().then(ncs => {
+      ncs.forEach(nc => {
+        let episode = {
+          link: nc.url,
+          title: nc.title,
+          num: nc.episode,
+          description: nc.description,
+          duration: parseInt(nc.duration / 60),
+          guests: nc.guests,
+          published: moment(nc.published_at).format('LL'),
+          image: nc.image,
+          audio_low: nc.audio_low,
+          audio_medium: nc.audio_medium,
+          audio_high: nc.audio_high,
+          audio_zip: nc.audio_zip,
+          guests: nc.guests.split(','),
+          product_name: nc.product_name
+        }
 
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) { // success
-    var str = ''
-    var data = JSON.parse(request.responseText);
-    var content = document.getElementById('content')
+        let product;
+        if (episode.product_name == 'NerdTech')
+          product = 'NerdTech'
+        else if (episode.product_name == 'Empreendedor')
+          product = 'Empreendedor'
 
-    data.forEach(function(nc) {
-      var episode = {
-        link: nc.url,
-        title: nc.title,
-        num: nc.episode,
-        description: nc.description,
-        duration: parseInt(nc.duration / 60),
-        guests: nc.guests,
-        published: nc.published_at,
-        image: nc.image,
-        audio_low: nc.audio_low,
-        audio_medium: nc.audio_medium,
-        audio_high: nc.audio_high,
-        audio_zip: nc.audio_zip,
-        guests: nc.guests.split(','),
-        product_name: nc.product_name
-      }
-
-      var product;
-      if (episode.product_name == 'NerdTech')
-        product = 'NerdTech '
-      else if (episode.product_name == 'Empreendedor')
-        product = 'Empreendedor '
-
-      str += '<article class="ep">'
-      str += '<header style="background-image: url(' + episode.image + ');">'
-      str += '<div class="wrap">'
-      str += '<h1>' + (product ? product : '') + '#' + episode.num + ' - ' + episode.title + '</h1>'
-      str += '<h2>' + episode.description + '</h2>'
-      str += '<p class="duration">' + moment(episode.published).format('LL') + ' - ' + episode.duration + ' minutos</p>'
-      for (var i = 0; i < episode.guests.length; i++) {
-        str += '<span class="guests">' + episode.guests[i] + '</span>'
-      }
-      str += '</div>'
-      str += '</header>'
-      str += '<div class="main">'
-      str += '<div class="qualidades">'
-      str += '<a href="' + episode.audio_high +'" title="Alta qualidade" target="_blank">Alta qualidade</a>'
-      str += '<a href="' + episode.audio_medium +'" title="Média qualidade" target="_blank">Média qualidade</a>'
-      str += '<a href="' + episode.audio_low +'" title="Baixa qualidade" target="_blank">Baixa qualidade</a>'
-      str += '<a href="' + episode.audio_zip +'" title="Arquivo .zip" target="_blank">Arquivo .zip</a>'
-      str += '</div>'
-      str += '</div>'
-      str += '</article>'
-
-      content.innerHTML = str
+        content.innerHTML += `
+          <article class="ep">
+            <header style="background-image: url(${episode.image});">
+              <div class="wrap">
+                <h1>${product ? product : ''} #${episode.num} ${episode.title}</h1>
+                <h2>${episode.description}</h2>
+                <p class="duration">${episode.published} - ${episode.duration} minutos</p>
+                ${episode.guests.map(guest => `<span class="guests">${guest}</span>`).join('\n')}
+              </div>
+            </header>
+            <div class="main">
+              <div class="qualidades">
+                <a href="${episode.audio_high}" title="Alta qualidade" target="_blank">Alta qualidade</a>
+                <a href="${episode.audio_medium}" title="Média qualidade" target="_blank">Média qualidade</a>
+                <a href="${episode.audio_low}" title="Baixa qualidade" target="_blank">Baixa qualidade</a>
+                <a href="${episode.audio_zip}" title="Arquivo .zip" target="_blank">Arquivo .zip</a>
+              </div>
+            </div>
+          </article>
+        `
+      })
     })
-  } else {
-    console.log('we reached our target server, but it returned an error')
   }
-}
-
-request.onerror = function() {
-  console.log('there was a connection error of some sort')
-}
-
-request.send()
+})
