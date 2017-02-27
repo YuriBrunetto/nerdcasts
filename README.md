@@ -1,5 +1,5 @@
 # Nerdcasts
-> :headphones: a simple web-app that lists the last episodes from nerdcast
+> :headphones: a simple webapp that lists the last episodes from nerdcast
 
 ## Usage
 1. Clone the repository to your local machine
