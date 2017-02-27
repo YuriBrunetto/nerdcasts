@@ -34,10 +34,10 @@ fetch(url).then(res => {
           <article class="ep">
             <header style="background-image: url(${episode.image});">
               <div class="wrap">
-                <h1>${product ? product : ''} #${episode.num} ${episode.title}</h1>
+                <h1>${product ? product : ''} #${episode.num} - ${episode.title}</h1>
                 <h2>${episode.description}</h2>
                 <p class="duration">${episode.published} - ${episode.duration} minutos</p>
-                ${episode.guests.map(guest => `<span class="guests">${guest}</span>`).join('\n')}
+                ${(episode.guests[0] !== '') ? episode.guests.map(guest => `<span class="guests">${guest}</span>`).join('\n') : ''}
               </div>
             </header>
             <div class="main">
